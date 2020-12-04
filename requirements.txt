@@ -1,0 +1,9 @@
+libusb1==1.8.1
+mfrc522==0.0.7
+ndeflib==0.3.3
+nfcpy==1.0.3
+pkg-resources==0.0.0
+pyDes==2.0.1
+pyserial==3.5
+RPi.GPIO==0.7.0
+spidev==3.5
