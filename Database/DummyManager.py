@@ -1,10 +1,12 @@
-from .IManager import IManager
+from .IDatabaseManager import IDatabaseManager
 
-class DummyManager(IManager):
+
+class DummyManager(IDatabaseManager):
     """ダミーデータベースマネージャー
 
     データベースとの通信を偽装する。いずれの場合も成功が返ってくる。
     """
+
     def __init__(self, host, port, user_name, user_password, db_name):
         """初期化処理
 
@@ -27,7 +29,7 @@ class DummyManager(IManager):
             bool: 貸し出し中か否か
         """
         return True
-    
+
     def regist(self, idm, umbrella_id):
         """IDmと傘のIDを登録する
 
@@ -39,6 +41,6 @@ class DummyManager(IManager):
             bool: 登録に成功したか否か
         """
         return True
-    
+
     def __del__(self):
         pass

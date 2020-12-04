@@ -1,6 +1,8 @@
 import nfc
 from nfc.clf import RemoteTarget
+
 from .ICardScanner import ICardScanner
+
 
 class CardScanner(ICardScanner):
     def __init__(self, device_name="usb", target_list=["212F", "424F"]):
@@ -12,7 +14,7 @@ class CardScanner(ICardScanner):
         """
         self.clf = nfc.ContactlessFrontend(device_name)
         self.target = [RemoteTarget(target) for target in target_list]
-    
+
     def scan(self):
         """カードをスキャンする。カードがあれば返り値にカードのタグ情報が渡される。
 

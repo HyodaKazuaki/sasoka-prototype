@@ -1,5 +1,7 @@
-from .IServoController import IServoController
 import RPi.GPIO as GPIO
+
+from .IServoManager import IServoController
+
 
 class ServoController(IServoController):
     def __init__(self, pin, unlock=2.5, lock=12.0, frequency=50, locked=False):

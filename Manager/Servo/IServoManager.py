@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class IServoManager(ABC):
     @abstractmethod
     def __init__(self, umbrella_holder_list):

@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
-class ICardScanner():
+
+class ICardScanner:
     @abstractmethod
     def __init__(self, device_name, target_list):
         pass

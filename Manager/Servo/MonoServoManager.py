@@ -1,5 +1,7 @@
-from .IServoManager import IServoManager
 import RPi.GPIO as GPIO
+
+from .IServoManager import IServoManager
+
 
 class MonoServoManager(IServoManager):
     def __init__(self, umbrella_holder_list=None):
@@ -12,21 +14,19 @@ class MonoServoManager(IServoManager):
         GPIO.setup(4, GPIO.OUT)
         self.p = GPIO.PWM(4, 50)
         self.p.start(2.5)
-    
+
     def lock(self):
-        """サーボモーターを施錠状態にする。
-        """
+        """サーボモーターを施錠状態にする。"""
         self.p.ChangeDutyCycle(12.0)
 
     def unlock_all(self):
-        """全てのサーボモーターを解錠状態にする。
-        """
+        """全てのサーボモーターを解錠状態にする。"""
         self.unlock()
         return True
 
     def unlock(self, servo_id=4):
         self.p.ChangeDutyCycle(2.5)
         return True
-    
+
     def __del__(self):
         GPIO.cleanup()

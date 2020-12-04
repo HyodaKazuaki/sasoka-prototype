@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
-class IManager(ABC):
+
+class IDatabaseManager(ABC):
     @abstractmethod
     def __init__(self, host, port, user_name, user_password, db_name):
         pass

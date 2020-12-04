@@ -1,5 +1,6 @@
-from .IUmbrellaManager import IUmbrellaManager
 from ..RFID import MonoRFIDManager as RFIDManager
+from .IUmbrellaManager import IUmbrellaManager
+
 
 class UmbrellaManager(IUmbrellaManager):
     def __init__(self, umbrella_holder_list, rfid_manager, servo_manager):
@@ -7,7 +8,7 @@ class UmbrellaManager(IUmbrellaManager):
         self.servo_manager = servo_manager
         # 起動時の貸し出し可能な傘を取得
         self.umbrella_holder_list = umbrella_holder_list
-    
+
     def check_umbrella_change(self, umbrella_set):
         """RFIDをチェックして変化を見る。
 
@@ -27,7 +28,9 @@ class UmbrellaManager(IUmbrellaManager):
             diff_umbrella_set = umbrella_set - now_umbrella_set
             if len(diff_umbrella_set) > 1:
                 # 一度に傘が借りられすぎた
-                print("Error: Number of umbrellas which are lent are too much at once a time.")
+                print(
+                    "Error: Number of umbrellas which are lent are too much at once a time."
+                )
                 continue
             if diff_umbrella_set != set():
                 # 1つだけ取り出された
@@ -44,7 +47,7 @@ class UmbrellaManager(IUmbrellaManager):
         # ロックを解除
         if not self.servo_manager.unlock_all():
             # ロックの解除に失敗
-            #TODO 何かエラーを出す
+            # TODO 何かエラーを出す
             return
         # どの傘を持っていくか判定する
         lent_umbrella_set = self.check_umbrella_change(umbrella_set)
@@ -52,7 +55,7 @@ class UmbrellaManager(IUmbrellaManager):
         # 貸してない場所だけ再びロックをする
         self.servo_manager.lock(least_umbrella_set)
         return lent_umbrella_set.pop()
-    
+
     def give_back(self):
 
         return True

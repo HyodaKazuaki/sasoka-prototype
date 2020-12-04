@@ -1,6 +1,8 @@
-from .IRFIDController import IRFIDController
-from mfrc522 import SimpleMFRC522
 import RPi.GPIO as GPIO
+from mfrc522 import SimpleMFRC522
+
+from .IRFIDController import IRFIDController
+
 
 class RFIDController(IRFIDController):
     def __init__(self, pin, num_try_to_get=2):
@@ -10,7 +12,7 @@ class RFIDController(IRFIDController):
             pin (int): RFIDモジュールのピン番号
             num_try_to_get (int, optional): ID取得試行回数. Defaults to 2.
         """
-        #TODO ピン番号を元に決定する
+        # TODO ピン番号を元に決定する
         self.reader = SimpleMFRC522()
         self.num_try_to_get = num_try_to_get
 

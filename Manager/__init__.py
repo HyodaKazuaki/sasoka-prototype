@@ -1,5 +1,5 @@
-from .RFID.MonoRFIDManager import MonoRFIDManager
-from .Servo.MonoServoManager import MonoServoManager
-from .Umbrella.UmbrellaManager import UmbrellaManager
+from .RFID import MonoRFIDManager
+from .Servo import MonoServoManager
+from .Umbrella import UmbrellaManager
 
 __all__ = ["MonoRFIDManager", "MonoServoManager", "UmbrellaManager"]

@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+
 class IRFIDController(ABC):
     @abstractmethod
     def __init__(self, rfid_module_id):

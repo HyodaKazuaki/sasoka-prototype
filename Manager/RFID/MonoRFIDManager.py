@@ -1,6 +1,8 @@
-from .IRFIDManager import IRFIDManager
-from mfrc522 import SimpleMFRC522
 import RPi.GPIO as GPIO
+from mfrc522 import SimpleMFRC522
+
+from .IRFIDManager import IRFIDManager
+
 
 class MonoRFIDManager(IRFIDManager):
     def __init__(self, umbrella_holder_list=None, num_try_to_get=2):
@@ -12,7 +14,7 @@ class MonoRFIDManager(IRFIDManager):
         """
         self.reader = SimpleMFRC522()
         self.num_try_to_get = num_try_to_get
-    
+
     def get_all(self):
         """全てのRFIDタグのIDを取得する。
 
@@ -21,7 +23,7 @@ class MonoRFIDManager(IRFIDManager):
         """
         rfid = self.get()
         return [rfid]
-    
+
     def get(self, number_rfid_reader=None):
         """指定したRFIDリーダーが認識するタグのIDを取得する。
 
