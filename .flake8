@@ -1,0 +1,11 @@
+[flake8]
+ignore = W503, E501, E203
+max-line-length = 80
+exclude = 
+    .git/*,
+    .vscode/*,
+    notebooks/*,
+    venv/*
+inline-quotes = double
+multiline-quotes = """
+docstring-quotes = """
