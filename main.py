@@ -7,14 +7,15 @@ from .Manager import MonoRFIDManager, MonoServoManager, UmbrellaManager
 from .UmbrellaHolder import UmbrellaHolder
 
 
-def lending(card_scanner, db_manager, umbrella_manager):
+def rental(card_scanner, db_manager, umbrella_manager):
     """貸し出し処理"""
     tag = card_scanner.scan()
     if tag is None:
         # カードなし
         return
+    idm = tag.idm
     # カードの情報をデータベースに問い合わせ
-    if db_manager.is_lending(idm):
+    if db_manager.is_rental(idm):
         # 貸し出し中なので貸し出さない
         # TODO すでに貸し出し中であることを示す
         return
@@ -26,13 +27,14 @@ def lending(card_scanner, db_manager, umbrella_manager):
         return
 
     # 傘を貸す
-    umbrella_id = umbrella_manager.lend_one()
+    umbrella_id = umbrella_manager.rent_one()
 
     # データベースにIDmと貸した傘の情報を記録する
     if not db_manager.regist(idm, umbrella_id):
         # 登録失敗
         # TODO 何か警告などを表示する
         return
+    # 貸し出し処理終了
 
 
 def coming_back(card_scanner, db_manager, umbrella_manager):
@@ -55,12 +57,10 @@ if __name__ == "__main__":
     servo_manager = MonoServoManager(umbrella_holder_list=umbrella_holder_list)
     umbrella_manager = UmbrellaManager(
         umbrella_holder_list=umbrella_holder_list,
-        rfid_manager=rfid_manager,
-        servo_manager=servo_manager,
     )
 
     while True:
         # 貸し出し
-        lending(card_scanner, db_manager, umbrella_manager)
+        rental(card_scanner, db_manager, umbrella_manager)
         # 返却
         coming_back(card_scanner, db_manager, umbrella_manager)

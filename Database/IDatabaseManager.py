@@ -7,7 +7,7 @@ class IDatabaseManager(ABC):
         pass
 
     @abstractmethod
-    def is_lending(self, idm):
+    def is_rental(self, idm):
         pass
 
     @abstractmethod

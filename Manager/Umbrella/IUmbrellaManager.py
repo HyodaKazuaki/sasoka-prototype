@@ -11,7 +11,7 @@ class IUmbrellaManager(ABC):
         pass
 
     @abstractmethod
-    def lend_one(self):
+    def rent_one(self):
         pass
 
     def give_back_one(self):

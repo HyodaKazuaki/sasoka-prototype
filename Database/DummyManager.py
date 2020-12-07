@@ -19,7 +19,7 @@ class DummyManager(IDatabaseManager):
         """
         pass
 
-    def is_lending(self, idm):
+    def is_rental(self, idm):
         """貸し出し中か判定する
 
         Args:

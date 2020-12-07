@@ -8,6 +8,7 @@ class UmbrellaHolder:
         """
         self.__rfid_controller = rfid_controller
         self.__servo_controller = servo_controller
+        self.__rfid = self.__rfid_controller.get()
 
     @property
     def rfid_controller(self):
@@ -29,4 +30,21 @@ class UmbrellaHolder:
 
     @property
     def rfid(self):
-        return self.__rfid_controller.get()
+        """RFIDが読み取ったRFIDタグのID。
+
+        Returns:
+            str: RFIDタグのID
+        """
+        return self.__rfid
+
+    def update_rfid(self):
+        """RFIDタグのIDを更新する。"""
+        self.__rfid = self.__rfid_controller.get()
+
+    def lock(self):
+        """ホルダーを施錠する。"""
+        self.__servo_controller.lock()
+
+    def unlock(self):
+        """ホルダーを解錠する。"""
+        self.__servo_controller.unlock()
