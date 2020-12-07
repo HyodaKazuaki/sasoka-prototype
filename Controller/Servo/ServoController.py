@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 
-from .IServoManager import IServoController
+from .IServoController import IServoController
 
 
 class ServoController(IServoController):
@@ -25,15 +25,13 @@ class ServoController(IServoController):
             self.__servo.start(self.lock_pwm)
         else:
             self.__servo.start(self.unlock_pwm)
-    
+
     def lock(self):
-        """施錠する。
-        """
+        """施錠する。"""
         self.__servo.ChangeDutyCycle(self.lock_pwm)
 
     def unlock(self):
-        """解錠する。
-        """
+        """解錠する。"""
         self.__servo.ChangeDutyCycle(self.unlock_pwm)
 
     def __del__(self):
