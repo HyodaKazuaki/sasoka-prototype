@@ -26,6 +26,7 @@ class CardScanner(ICardScanner):
             return nfc.tag.activate(self.clf, target)
 
     def transact(self, idm):
+        return True
         raise NotImplementedError("transact is not implemented.")
 
     def __del__(self):

@@ -2,7 +2,7 @@
 
 from Controller import CardScanner, RFIDController, ServoController
 from Database import DummyManager as DatabaseManager
-from Manager import MonoRFIDManager, MonoServoManager, UmbrellaManager
+from Manager import UmbrellaManager
 from UmbrellaHolder import UmbrellaHolder
 
 
@@ -12,6 +12,7 @@ def rental(card_scanner, db_manager, umbrella_manager):
     if tag is None:
         # カードなし
         return
+    print("Rental process start")
     idm = tag.idm
     # カードの情報をデータベースに問い合わせ
     if db_manager.is_rental(idm):
@@ -28,12 +29,15 @@ def rental(card_scanner, db_manager, umbrella_manager):
     # 傘を貸す
     umbrella_id = umbrella_manager.rent_one()
 
+    print("Umbrella taken")
+
     # データベースにIDmと貸した傘の情報を記録する
     if not db_manager.regist(idm, umbrella_id):
         # 登録失敗
         # TODO 何か警告などを表示する
         return
     # 貸し出し処理終了
+    print("Rental process finished.")
 
 
 def coming_back(card_scanner, db_manager, umbrella_manager):
@@ -44,20 +48,20 @@ def coming_back(card_scanner, db_manager, umbrella_manager):
 if __name__ == "__main__":
     # 初期化処理
     card_scanner = CardScanner()
-    db_manager = DatabaseManager()
+    db_manager = DatabaseManager(None, None, None, None, None)
 
     rfid_controller = RFIDController(None, 2)
     is_holding = True if rfid_controller.get() is not None else False
-    servo_controller = ServoController(4, locked=is_holding)
+    print(is_holding)
+    servo_controller = ServoController(7, locked=is_holding)
     umbrella_holder = UmbrellaHolder(rfid_controller, servo_controller)
     umbrella_holder_list = [umbrella_holder]
 
-    rfid_manager = MonoRFIDManager(umbrella_holder_list=umbrella_holder_list)
-    servo_manager = MonoServoManager(umbrella_holder_list=umbrella_holder_list)
     umbrella_manager = UmbrellaManager(
         umbrella_holder_list=umbrella_holder_list,
     )
 
+    print("Loop start.")
     while True:
         # 貸し出し
         rental(card_scanner, db_manager, umbrella_manager)

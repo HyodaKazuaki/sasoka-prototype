@@ -1,6 +1,5 @@
 import copy
 
-from ..RFID import MonoRFIDManager as RFIDManager
 from .IUmbrellaManager import IUmbrellaManager
 
 
@@ -26,6 +25,9 @@ class UmbrellaManager(IUmbrellaManager):
         umbrella_id_list = [
             umbrella_holder.rfid for umbrella_holder in umbrella_holder_list
         ]
+        umbrella_id_list = filter(
+            lambda umbrella_id: umbrella_id is not None, umbrella_id_list
+        )
         umbrella_id_set = set(umbrella_id_list)
         while True:
             # RFIDチェックして、差分を取る
@@ -34,6 +36,10 @@ class UmbrellaManager(IUmbrellaManager):
             now_umbrella_id_list = [
                 umbrella_holder.rfid for umbrella_holder in self.umbrella_holder_list
             ]
+            now_umbrella_id_list = filter(
+                lambda now_umbrella_id: now_umbrella_id is not None,
+                now_umbrella_id_list,
+            )
             now_umbrella_id_set = set(now_umbrella_id_list)
             if len(umbrella_id_set) < len(now_umbrella_id_set):
                 # 返却されたか増えた
@@ -52,6 +58,8 @@ class UmbrellaManager(IUmbrellaManager):
             if len(now_umbrella_id_set - umbrella_id_set) > 0:
                 # 借りるのと同時に別の傘が返された
                 print("Error: The umbrella was returned as soon as it was borrowed.")
+                print(now_umbrella_id_set)
+                print(umbrella_id_set)
                 # TODO 警告音などを出す
                 continue
             if lend_umbrella_id_set != set():
@@ -69,6 +77,8 @@ class UmbrellaManager(IUmbrellaManager):
             umbrella_holder.update_rfid()
         # 現在の状態のコピーを取る
         now_umbrella_holder_list = copy.copy(self.umbrella_holder_list)
+
+        print("Umbrella holder copied")
 
         # ロックを解除
         for umbrella_holder in self.umbrella_holder_list:

@@ -28,7 +28,7 @@ class DummyManager(IDatabaseManager):
         Returns:
             bool: 貸し出し中か否か
         """
-        return True
+        return False
 
     def regist(self, idm, umbrella_id):
         """IDmと傘のIDを登録する
