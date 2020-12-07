@@ -1,10 +1,9 @@
 # from multiprocessing import Process, Pipe
-import RPi.GPIO as GPIO
 
-from .Controller import CardScanner, RFIDController, ServoController
-from .Database import DummyManager as DatabaseManager
-from .Manager import MonoRFIDManager, MonoServoManager, UmbrellaManager
-from .UmbrellaHolder import UmbrellaHolder
+from Controller import CardScanner, RFIDController, ServoController
+from Database import DummyManager as DatabaseManager
+from Manager import MonoRFIDManager, MonoServoManager, UmbrellaManager
+from UmbrellaHolder import UmbrellaHolder
 
 
 def rental(card_scanner, db_manager, umbrella_manager):
