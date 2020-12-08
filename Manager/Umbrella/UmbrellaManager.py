@@ -163,6 +163,6 @@ class UmbrellaManager(IUmbrellaManager):
         # 傘をすでにロックしているので、ロックを解除して取り出されるまで待つ
         umbrella_holder.unlock()
         while umbrella_holder.rfid is not None:
-            self.buzzer_controller.inpulse(sound_time=0.017)
+            self.buzzer_controller.alert(sound_time=0.08, interval_time=0.08)
             # TODO 何か警告などを表示する
             umbrella_holder.update_rfid()
