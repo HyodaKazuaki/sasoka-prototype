@@ -24,6 +24,14 @@ def rental(
         return
     buzzer_controller.inpulse()
     print("Rental process start")
+
+    if umbrella_manager.is_empty():
+        # 傘が全て貸し出し中なので貸し出せない
+        print("Error: All umbrella holder are empty.")
+        buzzer_controller.bell()
+        # TODO 傘立てが空っぽであることを示す
+        return
+
     idm = tag.idm
     # カードの情報をデータベースに問い合わせ
     if db_manager.is_rental_idm(idm):
@@ -58,6 +66,8 @@ def rental(
     print("Wait a few second...")
     time.sleep(wait_seconds)
     print("Restored.")
+    for umbrella_holder in umbrella_manager.umbrella_holder_list:
+        print(umbrella_holder.rfid)
 
 
 def coming_back(

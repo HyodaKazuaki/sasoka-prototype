@@ -7,6 +7,10 @@ class IUmbrellaManager(ABC):
         pass
 
     @abstractmethod
+    def is_empty(self):
+        pass
+
+    @abstractmethod
     def lock_all(self):
         pass
 
