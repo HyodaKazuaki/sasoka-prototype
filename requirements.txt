@@ -10,6 +10,7 @@ mypy-extensions==0.4.3
 ndeflib==0.3.3
 nfcpy==1.0.3
 pathspec==0.8.1
+pigpio==1.78
 pycodestyle==2.6.0
 pyDes==2.0.1
 pyflakes==2.2.0
