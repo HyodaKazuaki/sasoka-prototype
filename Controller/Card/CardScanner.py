@@ -63,7 +63,6 @@ class CardScanner(ICardScanner):
         Returns:
             bool: 処理に成功したか否か
         """
-        return False
         return True
         raise NotImplementedError("transact is not implemented.")
 
