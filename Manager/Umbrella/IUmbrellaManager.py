@@ -7,12 +7,29 @@ class IUmbrellaManager(ABC):
         pass
 
     @abstractmethod
-    def check_umbrella_change(self, umbrella_set):
+    def lock_all(self):
+        pass
+
+    @abstractmethod
+    def lock_least_umbrellas(self):
+        pass
+
+    @abstractmethod
+    def unlock_all(self):
+        pass
+
+    @abstractmethod
+    def update_all_umbrella_id(self):
         pass
 
     @abstractmethod
     def rent_one(self):
         pass
 
-    def give_back_one(self):
+    @abstractmethod
+    def check_umbrella_was_returned(self):
+        pass
+
+    @abstractmethod
+    def unlock_umbrella_for_failsafe(self, umbrella_holder):
         pass
