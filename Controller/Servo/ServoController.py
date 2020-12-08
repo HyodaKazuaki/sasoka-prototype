@@ -4,11 +4,14 @@ from .IServoController import IServoController
 
 
 class ServoController(IServoController):
-    def __init__(self, pin, unlock=2.5, lock=12.0, frequency=50, locked=False):
+    def __init__(
+        self, bcm_pin, board_pin, unlock=2.5, lock=12.0, frequency=50, locked=False
+    ):
         """サーボモーターのコントローラー。
 
         Args:
-            pin (int): サーボモーターの制御ピン番号
+            bcm_pin (int): サーボモーターの制御ピンのGPIOピン番号
+            board_pin (int): サーボモーターの制御ピンのボード上ピン番号
             unlock (float, optional): 解錠状態のPWM比. Defaults to 2.5.
             lock (float, optional): 施錠状態のPWM比. Defaults to 12.0.
             frequency (int, optional): PWM信号の周波数. Defaults to 50.
@@ -16,9 +19,11 @@ class ServoController(IServoController):
         """
         self.lock_pwm = lock
         self.unlock_pwm = unlock
-        # gpio_mode = GPIO.getmode() if GPIO.getmode() is not None else GPIO.BCM()
         if GPIO.getmode() is None:
             GPIO.setmode(GPIO.BCM)
+            pin = bcm_pin
+        else:
+            pin = board_pin
         GPIO.setup(pin, GPIO.OUT)
         self.__servo = GPIO.PWM(pin, frequency)
         if locked:

@@ -3,7 +3,15 @@ from abc import ABC, abstractmethod
 
 class IServoController(ABC):
     @abstractmethod
-    def __init__(self, pin, unlock=2.5, lock=12.0, frequency=50, initialize_state=0):
+    def __init__(
+        self,
+        bcm_pin,
+        board_pin,
+        unlock=2.5,
+        lock=12.0,
+        frequency=50,
+        initialize_state=0,
+    ):
         pass
 
     @abstractmethod

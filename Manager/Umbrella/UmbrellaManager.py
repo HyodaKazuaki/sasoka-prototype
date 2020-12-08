@@ -4,14 +4,16 @@ from .IUmbrellaManager import IUmbrellaManager
 
 
 class UmbrellaManager(IUmbrellaManager):
-    def __init__(self, umbrella_holder_list):
+    def __init__(self, umbrella_holder_list, buzzer_controller):
         """傘立てのホルダー管理クラス。
 
         Args:
             umbrella_holder_list (list of UmbrellaHolder): このハードウェアが管理する傘立てのホルダーのリスト
+            buzzer_controller (IBuzzerController): ブザーコントローラー
         """
         # 起動時の貸し出し可能な傘を取得
         self.umbrella_holder_list = umbrella_holder_list
+        self.buzzer_controller = buzzer_controller
 
     def lock_all(self):
         """全ての傘立てのホルダーを施錠する。"""
@@ -70,7 +72,7 @@ class UmbrellaManager(IUmbrellaManager):
             if len(umbrella_id_set) < len(now_umbrella_id_set):
                 # 返却されたか増えた
                 print("Error: unexpected id is added.")
-                # TODO 警告音などを出す
+                self.buzzer_controller.inpulse(sound_time=0.05)
                 continue
             lend_umbrella_id_set = umbrella_id_set - now_umbrella_id_set
             if len(lend_umbrella_id_set) > 1:
@@ -78,7 +80,7 @@ class UmbrellaManager(IUmbrellaManager):
                 print(
                     "Error: Number of umbrellas which are lent are too much at once a time."
                 )
-                # TODO 警告音などを出す
+                self.buzzer_controller.inpulse(sound_time=0.05)
                 continue
             # 借りるのと同時に返していないかチェック
             if len(now_umbrella_id_set - umbrella_id_set) > 0:
@@ -86,7 +88,7 @@ class UmbrellaManager(IUmbrellaManager):
                 print("Error: The umbrella was returned as soon as it was borrowed.")
                 print(now_umbrella_id_set)
                 print(umbrella_id_set)
-                # TODO 警告音などを出す
+                self.buzzer_controller.inpulse(sound_time=0.05)
                 continue
             if lend_umbrella_id_set != set():
                 # 1つだけ取り出された
@@ -132,7 +134,7 @@ class UmbrellaManager(IUmbrellaManager):
                 print(
                     "Error: Number of umbrellas which are returned are too much at once a time."
                 )
-                # TODO 警告音などを出す
+                self.buzzer_controller.inpulse(sound_time=0.05)
                 continue
             break
         if len(returned_umbrella_id_set) == 0:
@@ -161,5 +163,6 @@ class UmbrellaManager(IUmbrellaManager):
         # 傘をすでにロックしているので、ロックを解除して取り出されるまで待つ
         umbrella_holder.unlock()
         while umbrella_holder.rfid is not None:
+            self.buzzer_controller.inpulse(sound_time=0.017)
             # TODO 何か警告などを表示する
             umbrella_holder.update_rfid()
