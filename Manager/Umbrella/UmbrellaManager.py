@@ -15,6 +15,20 @@ class UmbrellaManager(IUmbrellaManager):
         self.umbrella_holder_list = umbrella_holder_list
         self.buzzer_controller = buzzer_controller
 
+    def is_empty(self):
+        """傘立てが空か判定する。
+
+        Returns:
+            bool: 傘立てが空か否か
+        """
+        empty_umbrella_holder_list = list(
+            filter(
+                lambda umbrella_holder: umbrella_holder.rfid is None,
+                self.umbrella_holder_list,
+            )
+        )
+        return len(self.umbrella_holder_list) == len(empty_umbrella_holder_list)
+
     def lock_all(self):
         """全ての傘立てのホルダーを施錠する。"""
         for umbrella_holder in self.umbrella_holder_list:
@@ -163,6 +177,6 @@ class UmbrellaManager(IUmbrellaManager):
         # 傘をすでにロックしているので、ロックを解除して取り出されるまで待つ
         umbrella_holder.unlock()
         while umbrella_holder.rfid is not None:
-            self.buzzer_controller.inpulse(sound_time=0.017)
+            self.buzzer_controller.alert(sound_time=0.08, interval_time=0.08)
             # TODO 何か警告などを表示する
             umbrella_holder.update_rfid()
