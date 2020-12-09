@@ -1,0 +1,12 @@
+[Unit]
+Description = Sasoka system
+Requires = pigpiod.service
+
+[Service]
+ExecStart = /usr/local/bin/sasoka-prototype/venv/bin/python3 /usr/local/bin/sasoka-prototype/main.py
+Restart = always
+Type = simple
+User = root
+
+[Install]
+WantedBy = default.target
