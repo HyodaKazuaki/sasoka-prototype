@@ -21,8 +21,8 @@ class ServoController(IServoController):
         """
         self.min_dc = min_dc
         self.max_dc = max_dc
-        self.lock_dc = self.calc_duty_cycle_from_degree(lock)
-        self.unlock_dc = self.calc_duty_cycle_from_degree(unlock)
+        self.lock_dc = self.calc_duty_cycle_from_degree(lock_degree)
+        self.unlock_dc = self.calc_duty_cycle_from_degree(unlock_degree)
         if GPIO.getmode() is None:
             GPIO.setmode(GPIO.BCM)
             pin = bcm_pin
